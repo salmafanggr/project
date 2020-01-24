@@ -15,20 +15,16 @@
                                 <?= form_error('name', ' <small class="text-danger pl-3">', '</small>'); ?>
                             </div>
                             <div class="form-group">
-
-                                <input type="text" class="form-control form-control-user" id="email" name="email" placeholder="Email Address" value="<?= set_value('email') ?>">
-                                <?= form_error('email', ' <small class="text-danger pl-3">', '</small>'); ?>
-                            </div>
-                            <div class="form-group">
-                                <input type="number" class="form-control form-control-user" id="nip" name="nip" placeholder="NIP" value="<?= set_value('nip') ?>">
+                                <input type="text" class="form-control form-control-user" id="nip" name="nip" placeholder="NIP" value="<?= set_value('nip') ?>">
                                 <?= form_error('nip', ' <small class="text-danger pl-3">', '</small>'); ?>
                             </div>
-                            <div class="form-group ml-2">
-                                <a>Jenis Kelamin</a>
-                                <td>:</td>
-                                <input type="radio" name="gender" class="ml-3" value="Laki-Laki"> Laki-laki
-                                <input type="radio" name="gender" class="ml-3" value="Perempuan"> Perempuan
-                                <?= form_error('gender', ' <small class="text-danger pl-3">', '</small>'); ?>
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="alamat" name="alamat" placeholder="Alamat" value="<?= set_value('alamat') ?>">
+                                <?= form_error('alamat', ' <small class="text-danger pl-3">', '</small>'); ?>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="email" name="email" placeholder="Email Address" value="<?= set_value('email') ?>">
+                                <?= form_error('email', ' <small class="text-danger pl-3">', '</small>'); ?>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">

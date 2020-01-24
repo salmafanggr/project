@@ -15,103 +15,104 @@
 
     <div class="row">
 
-        <!-- Profile -->
-        <div class="col-xl-7">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary"> Profil Guru </h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    <img src="<?= base_url('assets/img/profile/') . $user['image']; ?>" class="rounded mx-auto d-block rounded-circle" style="width: 150px;">
-                    <div></div>
-                    <dl class="row mt-4 mb-4 pb-3">
-                        <dt class="col-sm-4">Nama</dt>
-                        <dd class="col-sm-8"><?= $user['name']; ?></dd>
-
-                        <dt class="col-sm-4">NIP</dt>
-                        <dd class="col-sm-8"><?= $user['nip']; ?></dd>
-
-                        <dt class="col-sm-4">Alamat</dt>
-                        <dd class="col-sm-8">
-                            <address class="mb-0">
-                                <?= $user['alamat']; ?>
-                            </address>
-                        </dd>
-
-                        <dt class="col-sm-4">Email address</dt>
-                        <dd class="col-sm-8">
-                            <a href="#"><?= $user['email']; ?></a>
-                        </dd>
-                    </dl>
-                </div>
-            </div>
-        </div>
-
         <!-- Absensi -->
-        <div class="col-xl-5">
+        <div class="col-xl-12">
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Absensi</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Presensi Guru</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <?php
-                    $date = mktime(date('m'), date('d'), date('Y'));
-                    echo date('l-d-M-Y', $date) . "<br>";
-                    date_default_timezone_set('Asia/Jakarta');
-                    $time = date('h:i:s');
-                    echo $time . " ";
-                    $m = date('H');
-                    if (($m >= 6) && ($m <= 11)) {
-                        echo "am";
-                    } else if (($m > 11) && ($m <= 15)) {
-                        echo "am";
-                    } else if (($m > 15) && ($m <= 18)) {
-                        echo "pm";
-                    } else {
-                        echo "pm";
-                    }
-                    ?>
-                    <div class="row mx-auto mt-3">
-                        <?= form_open('absen/masuk'); ?>
-                            <?php
-                                $id = $_SESSION['id'];
-                                $check = $this->db->query("SELECT curdate() FROM absen WHERE user_id=$id OR waktu_izin IS NULL AND waktu_masuk IS NULL")->num_rows();
-                                if($check == 0){
-                                    echo '<button type="submit" class="btn btn-primary btn-lg mr-3">Masuk</button>';
-                                }else{
-                                    echo '<button type="submit" class="btn btn-primary btn-lg mr-3" disabled>Masuk</button>';
+                    <div class="float-right">
+                        <script>
+                        function date_time(id)
+                        {
+                                date = new Date;
+                                year = date.getFullYear();
+                                month = date.getMonth();
+                                months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'Jully', 'August', 'September', 'October', 'November', 'December');
+                                d = date.getDate();
+                                day = date.getDay();
+                                days = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+                                h = date.getHours();
+                                if(h<10)
+                                {
+                                        h = "0"+h;
                                 }
-                            ?>
-                        </form>
-                        
-                        <?= form_open('absen/keluar'); ?>
-                            <?php
-                                $id = $_SESSION['id'];
-                                $check = $this->db->query("SELECT curdate() FROM absen WHERE user_id=$id AND waktu_masuk IS NOT NULL AND waktu_keluar IS NULL")->num_rows();
-                                if($check == 0){
-                                    echo '<button type="submit" class="btn btn-primary btn-lg mr-3" disabled>Keluar</button>';
-                                }else{
-                                    echo '<button type="submit" class="btn btn-primary btn-lg mr-3">Keluar</button>';
+                                m = date.getMinutes();
+                                if(m<10)
+                                {
+                                        m = "0"+m;
                                 }
-                            ?>
-                        </form>
-
-                        <?= form_open('absen/izin'); ?>
-                            <?php
-                                $user_id = $_SESSION['id'];
-                                $check = $this->db->query("SELECT curdate() FROM absen WHERE user_id=$id OR waktu_masuk IS NULL AND waktu_izin IS NULL")->num_rows();
-                                if($check == 0){
-                                    echo '<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal">Absen</button>';
-                                }else{
-                                    echo '<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal" disabled>Absen</button>';
+                                s = date.getSeconds();
+                                if(s<10)
+                                {
+                                        s = "0"+s;
                                 }
-                            ?>
-                        </form>
+                                result = ''+days[day]+','+' '+d+' '+months[month]+' '+year+' '+h+':'+m+':'+s;
+                                document.getElementById(id).innerHTML = result;
+                                setTimeout('date_time("'+id+'");','1000');
+                                return true;
+                        }
+                        </script>
                     </div>
+                    <table class="table table-stripped">
+                        <thead>
+                            <th>Nama</th>
+                            <th>Jurusan</th>
+                            <th>Waktu</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <td><?= $_SESSION['name'] ?></td>
+                            <td><?= $_SESSION['jurusan'] ?></td>
+                            <td>
+                                <span id="date_time"></span>
+                                <script type="text/javascript">window.onload = date_time('date_time');</script>
+                            </td>
+                            <td>
+                                <div class="row mx-auto">
+                                    <?= form_open('user/masuk'); ?>
+                                    <?php
+                                        $tgl= date('Y-m-d');
+                                        $id = $_SESSION['id'];
+                                        $check = $this->db->query("SELECT * FROM absen WHERE user_id=$id AND (waktu_izin IS NOT NULL OR waktu_masuk IS NOT NULL) AND (DATE(waktu_masuk) = CURRENT_DATE() OR DATE(waktu_izin) = CURRENT_DATE())")->num_rows();
+                                        if($check > 0){
+                                            echo '<button type="submit" class="btn btn-primary btn-md mr-3" disabled>Masuk</button>';
+                                        }else{
+                                            echo '<button type="submit" class="btn btn-primary btn-md mr-3">Masuk</button>';
+                                        }
+                                    ?>
+                                    </form>
+                                    
+                                    <?= form_open('user/keluar'); ?>
+                                        <?php
+                                            $id = $_SESSION['id'];
+                                            $check = $this->db->query("SELECT * FROM absen WHERE user_id=$id AND (waktu_masuk IS NOT NULL AND waktu_keluar IS NULL)")->num_rows();
+                                            if($check == 0){
+                                                echo '<button type="submit" class="btn btn-primary btn-md mr-3" disabled>Keluar</button>';
+                                            }else{
+                                                echo '<button type="submit" class="btn btn-primary btn-md mr-3">Keluar</button>';
+                                            }
+                                        ?>
+                                    </form>
+
+                                    <?= form_open('user/izin'); ?>
+                                        <?php
+                                            $user_id = $_SESSION['id'];
+                                            $check = $this->db->query("SELECT curdate() FROM absen WHERE user_id=$id AND (waktu_masuk IS NOT NULL OR waktu_izin IS NOT NULL) AND (DATE(waktu_masuk) = CURRENT_DATE() OR DATE(waktu_izin) = CURRENT_DATE())")->num_rows();
+                                            if($check > 0){
+                                                echo '<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#exampleModal" disabled>Absen</button>';
+                                            }else{
+                                                echo '<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#exampleModal">Absen</button>';
+                                            }
+                                        ?>
+                                    </form>
+                                </div>
+                            </td>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -125,10 +126,34 @@
             <!-- Project Card Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Jadwal Pelajaran</h6>
+                    <h6 class="m-0 font-weight-bold text-primary float-left">Daftar Kehadiran</h6>
+                    <button class="btn btn-success float-right"><a href="<?php echo base_url('user/export'); ?>" class="text-white"><i class="fas fa-file-excel"></i> Excel</a></button>
                 </div>
                 <div class="card-body">
-                    <h1>INI JADWAL PELAJARAN </h1>
+                    <table class="table table-stripped">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Masuk</th>
+                                <th>Keluar</th>
+                                <th>Izin</th>
+                                <th>Keterangan</th>
+                                <th>Alasan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($absen as $absensi): ?>
+                            <tr>
+                                <td><?=$absensi->nama?></td>
+                                <td><?=$absensi->waktu_masuk?></td>
+                                <td><?=$absensi->waktu_keluar?></td>
+                                <td><?=$absensi->waktu_izin?></td>
+                                <td><?=$absensi->keterangan?></td>
+                                <td><?=$absensi->alasan?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -151,7 +176,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <?= form_open('absen/izin'); ?>
+      <?= form_open('user/izin'); ?>
         <div class="modal-body">
             <div class="form-group">
                 <label for="keterangan">Keterangan</label>
@@ -173,3 +198,26 @@
     </div>
   </div>
 </div>
+
+<script>
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+if(dd<10) {
+  dd='0'+dd
+} 
+
+if(mm<10) {
+  mm='0'+mm
+} 
+
+today = dd+'/'+mm+'/'+yyyy;
+document.getElementById("demonew").innerHTML = today;
+var myVar=setInterval(function(){myTimer()},1000);
+
+function myTimer() {
+    var d = new Date();
+    document.getElementById("demo").innerHTML = d.toLocaleTimeString();
+}
+</script>

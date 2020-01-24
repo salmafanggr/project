@@ -38,6 +38,9 @@
     </div>
 </div>
 
+    <!-- Bootstrap core JavaScript-->
+    <script src="<?= base_url('assets/');  ?>vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url('assets/');  ?>vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
 <script src="<?= base_url('assets/');  ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->

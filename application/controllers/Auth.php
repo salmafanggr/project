@@ -35,16 +35,17 @@ class Auth extends CI_Controller
 
 		//jika user ada
 		if ($user) {
-			
-			if($user['is_confirm'] == 1){
+
+			if ($user['is_confirm'] == 1) {
 				if ($user['is_active'] == 1) {
 					//cek password
 					if (password_verify($password, $user['password'])) {
 						$data = [
 							'id' => $user['id'],
 							'name' => $user['name'],
-							'jurusan' => $user['jurusan'],
 							'email' => $user['email'],
+							'gender' => $user['gender'],
+							'jurusan' => $user['jurusan'],
 							'role_id' => $user['role_id']
 						];
 						$this->session->set_userdata($data);
@@ -66,7 +67,7 @@ class Auth extends CI_Controller
 					</div>');
 					redirect('auth');
 				}
-			}else{
+			} else {
 				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 				This Email has not been activated by admin!
 				</div>');
@@ -81,6 +82,8 @@ class Auth extends CI_Controller
 	}
 
 
+
+
 	public function registration()
 	{
 		if ($this->session->userdata('email')) {
@@ -90,7 +93,7 @@ class Auth extends CI_Controller
 		$this->form_validation->set_rules('nip', 'Nip', 'required|trim|is_unique[user.nip]', [
 			'is_unique' => 'This NIP has already registered!'
 		]);
-		$this->form_validation->set_rules('alamat', 'Alamat', 'required|trim');
+		$this->form_validation->set_rules('gender', 'Gender');
 		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
 			'is_unique' => 'This email has already registered!'
 		]);
@@ -110,7 +113,7 @@ class Auth extends CI_Controller
 			$data = [
 				'name' => htmlspecialchars($this->input->post('name', true)),
 				'nip' => htmlspecialchars($this->input->post('nip', true)),
-				'alamat' => htmlspecialchars($this->input->post('alamat', true)),
+				'gender' => htmlspecialchars($this->input->post('gender', true)),
 				'email' => htmlspecialchars($email),
 				'image' => 'default.jpg',
 				'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),

@@ -26,7 +26,7 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary float-left">Daftar Kehadiran</h6>
-                    <button class="btn btn-success float-right"><a href="<?php echo base_url('absen/export'); ?>" class="text-white"><i class="fas fa-file-excel"></i> Excel</a></button>
+                    <button class="btn btn-success float-right"><a href="<?php echo base_url('user/exportall'); ?>" class="text-white"><i class="fas fa-file-excel"></i> Excel</a></button>
                 </div>
                 <div class="card-body">
                     <table class="table table-stripped">
@@ -42,12 +42,14 @@
                         </thead>
                         <tbody>
                             <?php foreach($absen as $absensi): ?>
+                            <tr>
                                 <td><?=$absensi->nama?></td>
                                 <td><?=$absensi->waktu_masuk?></td>
                                 <td><?=$absensi->waktu_keluar?></td>
                                 <td><?=$absensi->waktu_izin?></td>
                                 <td><?=$absensi->keterangan?></td>
                                 <td><?=$absensi->alasan?></td>
+                            </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
